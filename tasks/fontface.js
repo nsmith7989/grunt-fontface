@@ -53,7 +53,7 @@ module.exports = function (grunt) {
 
 			var template = _.template(options.template);
 
-			contents += template({elem: elem}) + grunt.util.linefeed;
+			contents += template({font: elem}) + grunt.util.linefeed;
 
 		});
 

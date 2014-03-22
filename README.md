@@ -26,64 +26,49 @@ In your project's Gruntfile, add a section named `fontface` to the data object p
 grunt.initConfig({
   fontface: {
     options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+     	fontDir: 'fonts'
+     	template: "@font-face {" +
+                  		"font-family: 'MyFontFamily';" +
+                  		"src: url('{{font}}.eot?#iefix') format('embedded-opentype')," +
+                  		"url('{{font}}.woff') format('woff')," +
+                  		"url('{{font}}.ttf')  format('truetype')," +
+                  		"url('{{font}}.svg#{{font}}') format('svg');" +
+                  	"}"
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.template
 Type: `String`
-Default value: `',  '`
+Default value: none
+Required: true
 
-A string value that is used to do something with whatever.
+String that will be output for each font. Uses handlebars style template interpolation `{{ font }}`.
+ Example:
 
-#### options.punctuation
+	"@font-face {" +
+		"font-family: 'MyFontFamily';" +
+		"src: url('{{font}}.eot?#iefix') format('embedded-opentype')," +
+		"url('{{font}}.woff') format('woff')," +
+		"url('{{font}}.ttf')  format('truetype')," +
+		"url('{{font}}.svg#{{font}}') format('svg');" +
+	"}"
+
+#### options.fontDir
 Type: `String`
-Default value: `'.'`
+Default value: 'fonts'
 
-A string value that is used to do something else with whatever else.
+Location of the fonts directory
 
-### Usage Examples
+### options.outputFile
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Type: `String`
+Default value: 'sass/_fonts.scss'
 
-```js
-grunt.initConfig({
-  fontface: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  fontface: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Location of the output css/scss
 
 ## Release History
 _(Nothing yet)_

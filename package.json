@@ -1,7 +1,7 @@
 {
   "name": "grunt-fontface",
   "description": "Generate SCSS from all font files within a font directory",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "homepage": "https://github.com/nsmith7989/grunt-fontface",
   "author": {
     "name": "Nathanael Smith",
@@ -32,7 +32,6 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
     "grunt": "~0.4.4",
-    "uniq": "0.0.2",
     "underscore": "^1.6.0"
   },
   "peerDependencies": {
@@ -40,5 +39,8 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "underscore": "^1.6.0"
+  }
 }
