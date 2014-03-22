@@ -1,6 +1,6 @@
 # grunt-fontface
 
-> Generate SCSS from all font files within a font directory
+> Generate CSS/SCSS from all font files within a font directory
 
 ## Getting Started
 This plugin requires Grunt `~0.4.4`
@@ -71,4 +71,4 @@ Default value: 'sass/_fonts.scss'
 Location of the output css/scss
 
 ## Release History
-_(Nothing yet)_
+v 0.8.0 It's working!
