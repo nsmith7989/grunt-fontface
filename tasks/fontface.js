@@ -8,43 +8,58 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+	// Please see the Grunt documentation for more information regarding task
+	// creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('fontface', 'Generate SCSS from all font files within a font directory', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+	grunt.registerMultiTask('fontface', 'Generate CSS/SCSS from all font files within a font directory', function () {
+		// Merge task-specific and/or target-specific options with these defaults.
 
-      // Handle options.
-      src += options.punctuation;
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+		var options = this.options({
+				fontDir: 'fonts',
+				outputFile: 'sass/_fonts.scss'
+			}),
+			fontFiles = [];
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+
+
+		var _ = require('underscore'),
+			fontFiles = [],
+			uniqFontFiles = [],
+			contents = '';
+
+
+		grunt.file.recurse(options.fontDir, function(abspath, rootdir, subdir, filename) {
+			var processFile = filename.substring(0, filename.lastIndexOf('.'));
+			fontFiles.push(processFile);
+		});
+
+		//reduce the array
+		uniqFontFiles = _.uniq(fontFiles).filter(function(elem) {
+			if (elem) {
+				return elem;
+			}
+		});
+
+		//build contents
+		uniqFontFiles.forEach(function(elem) {
+
+			_.templateSettings = {
+				interpolate: /\{\{(.+?)\}\}/g
+			};
+
+			var template = _.template(options.template);
+
+			contents += template({elem: elem}) + grunt.util.linefeed;
+
+		});
+
+		grunt.file.write(options.outputFile, contents);
+
+
+	});
 
 };
