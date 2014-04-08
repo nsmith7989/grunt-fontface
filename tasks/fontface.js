@@ -20,19 +20,48 @@ module.exports = function (grunt) {
 
 		var options = this.options({
 				fontDir: 'fonts',
-				outputFile: 'sass/_fonts.scss'
+				outputFile: 'sass/_fonts.scss',
+				removeFromFile: '-webfont'
 			}),
 			fontFiles = [];
 
 
 
 		var _ = require('underscore'),
+			path = require('path'),
+			fs = require('fs'),
 			fontFiles = [],
 			uniqFontFiles = [],
 			contents = '';
 
+			//rewrite file names
+			fs.readdirSync(process.cwd() + '/' + options.fontDir, function(err, files) {
+				files.forEach(function(file) {
+					if (file.indexOf('-webfont') !== -1) {
+						var workiingFile = path.resolve(file);
+						grunt.log.write(workiingFile);
+						fs.rename(workiingFile, workiingFile.replace('-webfont', '', function(err) {
+							if (err) throw err;
+						}));
+					}
+				});
+			});
 
-		grunt.file.recurse(options.fontDir, function(abspath, rootdir, subdir, filename) {
+			
+
+
+		grunt.file.recurse(process.cwd() + '/' + options.fontDir, function(abspath, rootdir, subdir, filename) {
+
+			if (filename.indexOf(options.removeFromFile) !== -1) {
+				grunt.log.writeln('>>Renaming ' + filename);
+				var workiingFile = path.resolve(process.cwd() + '/' + options.fontDir + '/' + filename);
+					fs.renameSync(workiingFile, workiingFile.replace('-webfont', ''), function(err) {
+						if (err) throw err;
+				});
+				filename = filename.replace(options.removeFromFile, '');
+			}
+
+
 			var processFile = filename.substring(0, filename.lastIndexOf('.'));
 			fontFiles.push(processFile);
 		});

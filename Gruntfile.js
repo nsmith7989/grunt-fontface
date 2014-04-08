@@ -33,15 +33,11 @@ module.exports = function (grunt) {
 
 		dev: {
 			options: {
-				template: "@font-face {" +
-				"font-family: 'MyFontFamily';" +
-				"src: url('{{font}}.eot?#iefix') format('embedded-opentype')," +
-				"url('{{font}}.woff') format('woff')," +
-				"url('{{font}}.ttf')  format('truetype')," +
-				"url('{{font}}.svg#{{font}}') format('svg');" +
-				"}"
+				template: '@include rf-font-face($font-family: {{font}}, $file: {{font}}, $short-name: {{fonts}}, $serif: sans);'
 			}
 		}
+
+
 
 	},
 

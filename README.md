@@ -25,16 +25,19 @@ In your project's Gruntfile, add a section named `fontface` to the data object p
 ```js
 grunt.initConfig({
   fontface: {
-    options: {
-     	fontDir: 'fonts'
-     	template: "@font-face {" +
-                  		"font-family: 'MyFontFamily';" +
-                  		"src: url('{{font}}.eot?#iefix') format('embedded-opentype')," +
-                  		"url('{{font}}.woff') format('woff')," +
-                  		"url('{{font}}.ttf')  format('truetype')," +
-                  		"url('{{font}}.svg#{{font}}') format('svg');" +
-                  	"}"
+    dist: {
+      options: {
+      fontDir: 'fonts'
+      template: "@font-face {" +
+                      "font-family: 'MyFontFamily';" +
+                      "src: url('{{font}}.eot?#iefix') format('embedded-opentype')," +
+                      "url('{{font}}.woff') format('woff')," +
+                      "url('{{font}}.ttf')  format('truetype')," +
+                      "url('{{font}}.svg#{{font}}') format('svg');" +
+                    "}"
+      }
     }
+    
   },
 });
 ```
@@ -69,6 +72,13 @@ Type: `String`
 Default value: 'sass/_fonts.scss'
 
 Location of the output css/scss
+
+### options.removeFromFile
+
+Type: `String`
+Default value: '-webfont'
+
+Removes string from filename. 
 
 ## Release History
 v 0.8.0 It's working!
